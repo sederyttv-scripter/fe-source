@@ -199,19 +199,19 @@ local con1
 new:extratoggle("kill aura any npc", function(a)
 	if a then
 		con1 = rs.Stepped:Connect(function()
-			for _, v in pairs(ws:GetDescendants()) do
-				if v:IsA("Model") and isnpc(v) then
-					local npc = isnpc(v)
-					local hrp = npc:FindFirstChild("HumanoidRootPart")
-					local hrp1 = lp.Character and lp.Character:FindFirstChild("HumanoidRootPart")
+			local hrp1 = lp.Character and lp.Character:FindFirstChild("HumanoidRootPart")
+			if not hrp1 then return end
 
-					if hrp and hrp1 and hrp.ReceiveAge == 0 and hrp.Anchored == false then
-						local distance = (hrp.Position - hrp1.Position).Magnitude
-						if distance < 13 and npc ~= lp.Character then
-							local hum = npc:FindFirstChildOfClass("Humanoid")
-							if hum then
-								hum:ChangeState(15) 
-							end
+			local nbp = ws:GetPartBoundsInRadius(hrp1.Position, 13)
+			for _, part in pairs(nbp) do
+				local model = part:FindFirstAncestorOfClass("Model")
+				if model and isnpc(model) then
+					local npc = model
+					local hrp = npc:FindFirstChild("HumanoidRootPart")
+					if hrp and hrp.ReceiveAge == 0 and not hrp.Anchored and npc ~= lp.Character then
+						local hum = npc:FindFirstChildOfClass("Humanoid")
+						if hum then
+							hum:ChangeState(15)
 						end
 					end
 				end
@@ -224,6 +224,7 @@ new:extratoggle("kill aura any npc", function(a)
 		end
 	end
 end)
+
 
 
 
