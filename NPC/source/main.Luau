@@ -1,6 +1,5 @@
 --1. rules: it is forbidden to change the credit name, this script was created by @im_patrick you will be charged dcma for changing the credit
---2. rules: You must ask permission first if you want to post this script on any public website.
---3. rules: do not upload/post this script before im_patrick publishes this script on youtube
+--2. rules: do not upload/post this script before im_patrick publishes this script on youtube
 
 if patricknpcpanel then return end; patricknpcpanel = true
 
