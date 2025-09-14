@@ -875,7 +875,6 @@ G2L["5e"]["Name"] = [[off]];
 G2L["5f"] = Instance.new("ImageButton", G2L["5b"]);
 G2L["5f"]["BorderSizePixel"] = 0;
 G2L["5f"]["ImageTransparency"] = 1;
--- [ERROR] cannot convert ImageContent, please report to "https://github.com/uniquadev/GuiToLuaConverter/issues"
 G2L["5f"]["BackgroundColor3"] = Color3.fromRGB(255, 0, 0);
 G2L["5f"]["Image"] = [[rbxasset://textures/ui/GuiImagePlaceholder.png]];
 G2L["5f"]["Size"] = UDim2.new(0.441, 0, 1, 0);
@@ -1084,6 +1083,10 @@ local tweenservice = game:GetService("TweenService")
 local fast = TweenInfo.new(.5, Enum.EasingStyle.Exponential)
 local medium = TweenInfo.new(.67)
 local slow = TweenInfo.new(.8)
+
+function partowner(part)
+	return part.ReceiveAge == 0
+end
 
 clicknpc = true
 disable.Frame.togheader.togglebutton.MouseButton1Click:Connect(function()
