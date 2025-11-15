@@ -493,7 +493,9 @@ mainFrame.Size = UDim2.new(0, 0, 0, 0)
 tweenservice:Create(mainFrame, fast, {Size = UDim2.new(0, 680, 0, 480)}):Play()
 
 return {
-	create = create,
+	create = function()
+		return create
+	end,
 	G2L = script,
 	clicknpc = function() return clicknpc end
 }
