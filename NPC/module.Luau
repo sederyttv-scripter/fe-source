@@ -362,11 +362,11 @@ end)
 -- Create System
 local create = {}
 
-function create:toggle(title, callback)
+function create:toggle(title, callback, parent)
 	local toggle = toggleTemplate:Clone()
 	toggle.Visible = true
 	toggle.Label.Text = title
-	toggle.Parent = settingsList
+	toggle.Parent = parent or settingsList
 	
 	local state = false
 	local bg = toggle.ToggleBackground
@@ -390,6 +390,52 @@ function create:toggle(title, callback)
 	end)
 	
 	return toggle
+end
+
+function create:maintoggle(title, description, callback)
+	-- Toggle card for the actions panel
+	local action = actionTemplate:Clone()
+	action.Visible = true
+	action.Title.Text = title
+	action.Description.Text = description
+	action.Parent = actionsList
+	
+	local state = false
+	
+	action.Button.MouseButton1Click:Connect(function()
+		state = not state
+		
+		tweenservice:Create(action, TweenInfo.new(0.2), {
+			BackgroundColor3 = state and Color3.fromRGB(40, 80, 120) or Color3.fromRGB(30, 30, 40)
+		}):Play()
+		
+		tweenservice:Create(action.UIStroke, TweenInfo.new(0.2), {
+			Color = state and Color3.fromRGB(100, 180, 255) or Color3.fromRGB(45, 45, 60),
+			Thickness = state and 2 or 1
+		}):Play()
+		
+		if callback then
+			pcall(callback, state)
+		end
+	end)
+	
+	action.Button.MouseEnter:Connect(function()
+		if not state then
+			tweenservice:Create(action, TweenInfo.new(0.2), {
+				BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+			}):Play()
+		end
+	end)
+	
+	action.Button.MouseLeave:Connect(function()
+		if not state then
+			tweenservice:Create(action, TweenInfo.new(0.2), {
+				BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+			}):Play()
+		end
+	end)
+	
+	return action
 end
 
 function create:action(title, description, callback)
